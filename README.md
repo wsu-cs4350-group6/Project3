@@ -15,9 +15,3 @@ a username and password as user input.  Second, re-factor the PHP code into a RE
 * **EXTRA CREDIT**: Create a user registration form in JavaScript and a corresponding web service endpoint for
 registration. (**20**)
 * **80** points possible
-
-# Composer
-run 
-```
-php composer.phar install
-```
