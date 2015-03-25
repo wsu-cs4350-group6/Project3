@@ -13,5 +13,8 @@
             "name": "Darin Critchlow",
             "email": "darincritchlow@gmail.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {"API\\": "src/"}
+    }
 }
