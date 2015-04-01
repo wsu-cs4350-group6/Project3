@@ -2,7 +2,10 @@
 
 $loader = require '../vendor/autoload.php';
 
-$app = new \Slim\Slim();
+use API\Common\Authentication\DataBaseAuthentication;
+use Slim\Slim;
+
+$app = new Slim();
 
 $app->get('/', function(){
 	echo 'Click here <a href="/hello/world">Hello world</a>';
@@ -11,5 +14,18 @@ $app->get('/', function(){
 $app->get('/hello/:name', function($name) {
 	echo "Hello, $name";
 });
+
+$app->post('/authenticate',function() use ($app){
+	
+	$authEngine = new DataBaseAuthentication('sqlite');
+	
+	$app->response->setStatus(403);
+	if($authEngine->authenticate($app->request->post('username'),$app->request->post('password')))
+	{
+		$app->response->setStatus(200);
+	}
+	
+});
+
 
 $app->run();
