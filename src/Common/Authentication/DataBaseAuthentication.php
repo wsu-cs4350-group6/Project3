@@ -58,27 +58,58 @@ class DataBaseAuthentication implements IAuthentication
         }
         
     }
-    public function authenticate($username, $password)
+    /*
+    *   @param string $username
+    *   @return boolean
+    */
+    public function userExists($username)
     {
+        $exists = FALSE;
         try
         {
             $this->connect();
-            $sql = "SELECT username,password from users where username='$username'";
+            $sql = "SELECT username from users where username='$username'";
             $statement = $this->dbh->query($sql);
-            $statement->setFetchMode(PDO::FETCH_ASSOC);
-            
-            $row = $statement->fetch();
-            
-            if($row['password'] === md5($password))
-            {
-                return TRUE;
-            }
-            
+            $exists = (bool) $statement->fetch();
         }
-        catch (PDOException $e)
+        catch(PDOException $e)
         {
             echo $e->getMessage();
         }
-        return FALSE;
+        
+        return $exists;
+    }
+    /*
+    *   @param string $username
+    *   @param string $password
+    *   @return int returns the response codes
+    */
+    public function authenticate($username, $password)
+    {
+        $responseCode = 403;
+        if($this->userExists($username))
+        {
+            $responseCode = 401;
+            try
+            {
+                $this->connect();
+                $sql = "SELECT username,password from users where username='$username'";
+                $statement = $this->dbh->query($sql);
+                $statement->setFetchMode(PDO::FETCH_ASSOC);
+            
+                $row = $statement->fetch();
+            
+                if($row['password'] === md5($password))
+                {
+                    $responseCode = 200;
+                }
+            
+            }
+            catch (PDOException $e)
+            {
+                echo $e->getMessage();
+            }
+        }
+        return $responseCode;
     }
 }

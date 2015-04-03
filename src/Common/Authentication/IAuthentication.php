@@ -25,4 +25,9 @@ interface IAuthentication
      * @access public
      */
     public function authenticate($username, $password);
+    /*
+    *   @param string $username
+    *   @return bool
+    */
+    public function userExists($username);
 }

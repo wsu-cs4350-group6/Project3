@@ -19,11 +19,7 @@ $app->post('/authenticate',function() use ($app){
 	
 	$authEngine = new DataBaseAuthentication('sqlite');
 	
-	$app->response->setStatus(403);
-	if($authEngine->authenticate($app->request->post('username'),$app->request->post('password')))
-	{
-		$app->response->setStatus(200);
-	}
+	$app->response->setStatus($authEngine->authenticate($app->request->post('username'),$app->request->post('password')));
 	
 });
 
