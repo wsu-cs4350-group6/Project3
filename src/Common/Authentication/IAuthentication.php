@@ -10,7 +10,7 @@
  * $LastChangedBy$
  */
 
-namespace Common\Authentication;
+namespace API\Common\Authentication;
 
 
 interface IAuthentication 
@@ -25,4 +25,9 @@ interface IAuthentication
      * @access public
      */
     public function authenticate($username, $password);
+    /*
+    *   @param string $username
+    *   @return bool
+    */
+    public function userExists($username);
 }
