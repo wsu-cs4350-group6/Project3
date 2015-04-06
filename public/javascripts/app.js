@@ -4,16 +4,13 @@
 
 }(function($, window, document) {
 
-	// Listen for the jQuery ready event on the document
 	$(function() {
-
-		// The DOM is ready!
 
 		$("div#loginForm").append(
 			// Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
 			$("<h3/>").text("Sign In"),
 			$("<form/>", {
-				// action: 'index.html',
+				//action: '#',
 				method: 'post'
 			}).append(
 				// Create <form> Tag and Appending in HTML Div form1.
@@ -38,38 +35,37 @@
 			)		
 		);
 
-		var submit = $("#sumbit");
-			submit.on({
+		var form = $("#loginForm");
+			form.on({
 
-				"click": function() {
+				"click": function(e) {
+                    e.preventDefault();
+                    var username = $(this).find("[name='username']").val();
+                    var password = $(this).find("[name='password']").val();
 
-					authenticate("david", "test", "e618d316-8249-5d7a-8eac-8942f73192d7").done(function(data) {
-				    	// Updates the UI based the ajax result
-				    	$("#authorized").text(data.name);
+                    authenticate(username, password, "e618d316-8249-5d7a-8eac-8942f73192d7").done(function (data) {
+                        // Updates the UI based the ajax result
 
-				}
+                        $("#authorized").text("Authorized");
 
-		});		
+                    })
+                    $("#authorized").text('');
+                }
 
-    // 	authenticate("david", "test", "e618d316-8249-5d7a-8eac-8942f73192d7").done(function(data) {
- //    	// Updates the UI based the ajax result
- //    	$("#authorized").text(data.name);  
+		});
 
 	});
 
-	// The rest of the code goes here!
 	function authenticate(username, password, accessKey) {
 		var key = accessKey;
-		var dynamicData = {};
-		dynamicData["username"] = username;
-		dynamicData["password"] = password;
+		var formData = {username:username, password:password};
 		return $.ajax({
 			url: "/authenticate",
 			type: "post",
 			headers: {
 				"Authorization": key
 			},
-			data: dynamicData
+			data: formData
 		});
 	}
 

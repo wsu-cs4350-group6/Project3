@@ -96,6 +96,7 @@ class DataBaseAuthentication implements IAuthentication
     public function authenticate($username, $password)
     {
         $responseCode = 401;
+        $body = '';
 
         if($this->userExists($username))
         {
