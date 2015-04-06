@@ -18,6 +18,8 @@ $app = new Slim(
     $config['app']['slim-config']
 );
 
+$env = $app->environment;
+$env['config'] = $config;
 
 foreach($config['app']['endpoints'] as $endpoint)
 {

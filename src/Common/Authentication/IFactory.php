@@ -1,5 +1,5 @@
 <?php
-namespace Common\Authentication;
+namespace API\Common\Authentication;
 
 interface IFactory
 {
