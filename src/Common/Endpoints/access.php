@@ -3,7 +3,7 @@
 use API\Common\Authentication\SQLiteAccess;
 
 /**
- * @api {get} /access Access Key Request
+ * @api {get} /access Request Access Key
  * @apiName GetAccess
  * @apiGroup Authenticate
  *

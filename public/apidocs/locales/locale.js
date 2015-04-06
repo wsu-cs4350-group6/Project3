@@ -1,7 +1,7 @@
 define([
-    './locales/de.js',
-    './locales/nl.js',
-    './locales/zh.js'
+    './apidocs/locales/de.js',
+    './apidocs/locales/nl.js',
+    './apidocs/locales/zh.js'
 ], function() {
     var locales = {};
     for(index in arguments) {

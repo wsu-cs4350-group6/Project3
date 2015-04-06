@@ -4,8 +4,8 @@ use API\Common\Authentication\DataBaseAuthentication;
 use API\Common\Authentication\SQLiteAccess;
 
 /**
- * @api {post} /authenticate Authenticate
- * @apiHeader {String} Authorization Users unique access key
+ * @api {post} /authenticate Authenticate User
+ * @apiHeader {String} Authorization Unique access key
  * @apiHeaderExample {json} Header-Example:
  *     {
  *       "Authorization": "e618d316-8249-5d7a-8eac-8942f73192d7"

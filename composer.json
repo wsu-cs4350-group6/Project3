@@ -6,8 +6,7 @@
         "rhumsaa/uuid" : "~2.8"
     },
     "require-dev": {
-        "codeception/codeception": "~2.0",
-        "apigen/apigen": "~4.0"
+        "codeception/codeception": "~2.0"
     },
     "license": "MIT",
     "authors": [
