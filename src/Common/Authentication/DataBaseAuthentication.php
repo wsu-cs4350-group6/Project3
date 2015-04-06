@@ -95,10 +95,10 @@ class DataBaseAuthentication implements IAuthentication
     */
     public function authenticate($username, $password)
     {
-        $responseCode = 403;
+        $responseCode = 401;
+
         if($this->userExists($username))
         {
-            $responseCode = 401;
             try
             {
                 $this->connect();
@@ -111,7 +111,11 @@ class DataBaseAuthentication implements IAuthentication
                 if($row['password'] === md5($password))
                 {
                     $responseCode = 200;
+                    $body = array('username' => $username);
+                    return array('status' => $responseCode, 'body' => $body);
                 }
+
+                $body = array('InvalidCredentials' => 'Invalid username:password');
             
             }
             catch (PDOException $e)
@@ -119,6 +123,6 @@ class DataBaseAuthentication implements IAuthentication
                 echo $e->getMessage();
             }
         }
-        return $responseCode;
+        return array('status' => $responseCode, 'body' => $body);
     }
 }
