@@ -10,6 +10,7 @@ $authDir = $commonDir . DIRECTORY_SEPARATOR . 'Authentication';
 $endpoints = $commonDir . DIRECTORY_SEPARATOR . 'Endpoints';
 $configDir = $srcDir . DIRECTORY_SEPARATOR . 'Config';
 $viewsDir = $srcDir . DIRECTORY_SEPARATOR . 'Views';
+$dataDir = $projectDir . DIRECTORY_SEPARATOR . 'data';
 
 $config = [
     'app' => [
@@ -32,6 +33,13 @@ $config = [
             '/'             => $endpoints . DIRECTORY_SEPARATOR . 'home.php',
             '/access'       => $endpoints . DIRECTORY_SEPARATOR . 'access.php',
             '/authenticate' => $endpoints . DIRECTORY_SEPARATOR . 'authenticate.php'
+        ],
+        'sqlite' => $dataDir . DIRECTORY_SEPARATOR . 'cs4350.sqlite',
+        'mysql' => [
+            'host' => 'localhost',
+            'name' => 'cs4350',
+            'user' => 'cs4350',
+            'password' => 'cs4350'
         ]
     ]
 ];
