@@ -1,10 +1,10 @@
 <?php
 
 use API\Common\Authentication\DataBaseAuthentication;
-use API\Common\Authentication\Access;
+use API\Common\Authentication\SQLiteAccess;
 
 $app->post('/authenticate',function() use ($app, $env){
-    $access = new Access();
+    $access = new SQLiteAccess();
     $uuid = $app->request->headers['Authorization'];
 
     if(!$uuid)
