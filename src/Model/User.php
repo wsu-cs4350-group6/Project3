@@ -53,22 +53,26 @@ class User
     */
     public function save()
     {
-        $success = FALSE;
-        
-        $sql = "INSERT INTO users (username,password) values(:username,:password";
+        // Save should have an update function, but don't know how to implement that yet
         if(User::exists($this->username))
         {
-            $sql = "UPDATE users SET username=:username, password=:password WHERE username=:username";
+            return FALSE;
         }
+        
+        $success = FALSE;
         
         try
         {
             $dbh = new PDO('sqlite:'.User::getApp()->sqliteFile);
+            $sql = "INSERT INTO users (username,password) values(:username,:password)";
             $statement = $dbh->prepare($sql);
-            $success = $statement->execute(array(
-                ':username' => $this->username,
-                ':password' => $this->password
-            ));
+            if($statement)
+            {
+                $success = $statement->execute(array(
+                    ':username' => $this->username,
+                    ':password' => $this->password
+                ));
+            }
         }
         catch(PDOException $e)
         {
