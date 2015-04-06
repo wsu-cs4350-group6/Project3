@@ -12,7 +12,7 @@ use Rhumsaa\Uuid\Uuid;
 use Rhumsaa\Uuid\Exception\UnsatisfiedDependencyException;
 use PDO;
 
-class Access
+class SQLiteAccess implements IAccess
 {
     /**
      * @param $remoteAddress
