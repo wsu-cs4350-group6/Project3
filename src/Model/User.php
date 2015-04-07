@@ -27,11 +27,11 @@ class User
         try
         {
             $dbh = new PDO('sqlite:'.User::getApp()->sqliteFile);
-            $sql = "SELECT username from users where username=:username";
+            $sql = "SELECT id,username from users where username=:username";
         
             $statement = $dbh->prepare($sql);
             $statement->execute(array(':username'=>$username));
-            $exists = (bool)$statement->fetch();
+            $exists = $statement->fetch();
         }
         catch(PDOException $e)
         {
