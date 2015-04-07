@@ -103,6 +103,6 @@ $app->post('/authenticate',function() use ($app, $env){
 
     $app->response->setStatus($result['status']);
 
-    $app->response->setBody(json_encode($result['body']));
+    $app->response->setBody(json_encode($result['body'], JSON_UNESCAPED_SLASHES));
 
 });
