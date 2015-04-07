@@ -20,3 +20,27 @@ $app->post('/register',function() use($app){
     
     
 });
+
+$app->get('/register',function() use($app){
+    $body = <<<HTML
+    <!DOCTYPE html>
+    <html>
+    <body>
+        <title>Register</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <link rel="stylesheet" href="/css/style.css" type="text/css" media="all">
+    </body>
+    <body>
+        <div id='registration'>
+            <h2>Registration</h2>
+            <form action='/register' method='post'>
+                <input type='text' name='username'/>
+                <input type='password' name='password'/>
+                <button type='submit'>Submit</button>
+            </form>
+        </div>
+    </body>
+    </html>
+HTML;
+    $app->response->setBody($body);
+});
