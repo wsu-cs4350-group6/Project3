@@ -1,13 +1,15 @@
 var gulp = require('gulp');
-var clean = require('gulp-clean');
 var uglify = require('gulp-uglify');
+var apidoc = require('gulp-apidoc')
 
 var bases = {
 	bootstrap: 'bower_components/bootstrap/dist',
 	dist: 'public', 
 	stylesheets: 'public/stylesheets',
 	javascripts: 'public/javascripts',
-	src: 'src'
+	src: 'src',
+	endpoints: 'src/Common/Endpoints',
+	apidocuments: 'public/apidocs'
 };
 
 var paths = {
@@ -23,6 +25,15 @@ gulp.task('copy', function() {
 	gulp.src(paths.scripts, {cwd: bases.src})
 	.pipe(uglify())
 	.pipe(gulp.dest(bases.javascripts));
+
+});
+
+gulp.task('apidocs', function() {
+
+	apidoc.exec({
+		src: bases.endpoints,
+		dest: bases.apidocuments
+	});
 
 });
 

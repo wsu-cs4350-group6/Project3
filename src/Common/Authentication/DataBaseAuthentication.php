@@ -112,6 +112,7 @@ class DataBaseAuthentication implements IAuthentication
                 echo $e->getMessage();
             }
         }
+        $body = array('UserNotFound' => '/register');
         return array('status' => $responseCode, 'body' => $body);
     }
 }

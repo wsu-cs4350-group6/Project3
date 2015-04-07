@@ -47,6 +47,14 @@ define({ "api": [
     },
     "error": {
       "fields": {
+        "302": [
+          {
+            "group": "302",
+            "optional": false,
+            "field": "UserNotFound",
+            "description": "<p>Username was not found, gives link to registration page.</p> "
+          }
+        ],
         "401": [
           {
             "group": "401",
@@ -83,6 +91,11 @@ define({ "api": [
       "examples": [
         {
           "title": "Error-Response:",
+          "content": "HTTP/1.1 302 Found\n{\n  \"UserNotFound\": \"/register\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
           "content": "HTTP/1.1 401 Unauthorized\n{\n  \"NoAccessKey\": \"You must have an access key\"\n}",
           "type": "json"
         },
@@ -109,7 +122,7 @@ define({ "api": [
       ]
     },
     "version": "0.1.0",
-    "filename": "/Users/dcritchlow/Dev/Project3/src/Common/Endpoints/authenticate.php",
+    "filename": "src/Common/Endpoints/authenticate.php",
     "groupTitle": "Authenticate"
   },
   {
@@ -139,7 +152,7 @@ define({ "api": [
       ]
     },
     "version": "0.1.0",
-    "filename": "/Users/dcritchlow/Dev/Project3/src/Common/Endpoints/access.php",
+    "filename": "src/Common/Endpoints/access.php",
     "groupTitle": "Authenticate"
   }
 ] });
