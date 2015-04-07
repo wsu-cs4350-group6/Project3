@@ -12,6 +12,7 @@
 
 namespace API\Common\Authentication;
 
+use API\Model\User;
 use PDO;
 
 class DataBaseAuthentication implements IAuthentication 
@@ -73,20 +74,7 @@ class DataBaseAuthentication implements IAuthentication
     */
     public function userExists($username)
     {
-        $exists = FALSE;
-        try
-        {
-            $this->connect();
-            $sql = "SELECT username from users where username='$username'";
-            $statement = $this->dbh->query($sql);
-            $exists = (bool) $statement->fetch();
-        }
-        catch(PDOException $e)
-        {
-            echo $e->getMessage();
-        }
-        
-        return $exists;
+        return User::exists($username);
     }
     /*
     *   @param string $username

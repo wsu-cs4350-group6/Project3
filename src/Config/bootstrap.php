@@ -26,4 +26,9 @@ foreach($config['app']['endpoints'] as $endpoint)
     require $endpoint;
 }
 
+foreach($config['app']['database'] as $key => $value)
+{
+    $app->$key = $value;
+}
+
 $app->run();
