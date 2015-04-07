@@ -12,6 +12,7 @@
 
 namespace API\Common\Authentication;
 
+use API\Model\User;
 use PDO;
 
 class DataBaseAuthentication implements IAuthentication 
@@ -73,20 +74,7 @@ class DataBaseAuthentication implements IAuthentication
     */
     public function userExists($username)
     {
-        $exists = FALSE;
-        try
-        {
-            $this->connect();
-            $sql = "SELECT username from users where username='$username'";
-            $statement = $this->dbh->query($sql);
-            $exists = (bool) $statement->fetch();
-        }
-        catch(PDOException $e)
-        {
-            echo $e->getMessage();
-        }
-        
-        return $exists;
+        return User::exists($username);
     }
     /*
     *   @param string $username
@@ -96,22 +84,23 @@ class DataBaseAuthentication implements IAuthentication
     public function authenticate($username, $password)
     {
         $responseCode = 401;
+        $body = '';
 
         if($this->userExists($username))
         {
             try
             {
                 $this->connect();
-                $sql = "SELECT username,password from users where username='$username'";
-                $statement = $this->dbh->query($sql);
-                $statement->setFetchMode(PDO::FETCH_ASSOC);
-            
+                $sql = "SELECT id,username,password from users where username=:username";
+                $statement = $this->dbh->prepare($sql);
+                $statement->bindParam(':username', $username, PDO::PARAM_STR);
+                $statement->execute();
                 $row = $statement->fetch();
             
                 if($row['password'] === md5($password))
                 {
                     $responseCode = 200;
-                    $body = array('username' => $username);
+                    $body = array('Location' => '/user/'.$row['id']);
                     return array('status' => $responseCode, 'body' => $body);
                 }
 
