@@ -13,12 +13,12 @@ use API\Common\Authentication\SQLiteAccess;
  * @apiName AuthenticateUser
  * @apiGroup Authenticate
  *
- * @apiSuccess (200) {json} username Username of the User
+ * @apiSuccess (200) {json} Location url for user profile
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *  {
- *      "username": "david"
+ *      "Location": "/user/{id}"
  *  }
  *
  * @apiError (401) NoAccessKey Access key was not included.

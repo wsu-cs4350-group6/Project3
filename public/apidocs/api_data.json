@@ -32,15 +32,15 @@
             "group": "200",
             "type": "json",
             "optional": false,
-            "field": "username",
-            "description": "<p>Username of the User</p> "
+            "field": "Location",
+            "description": "<p>url for user profile</p> "
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "   HTTP/1.1 200 OK\n{\n    \"username\": \"david\"\n}",
+          "content": "   HTTP/1.1 200 OK\n{\n    \"Location\": \"/user/{id}\"\n}",
           "type": "json"
         }
       ]
@@ -109,7 +109,7 @@
       ]
     },
     "version": "0.1.0",
-    "filename": "C:/Dev/temp/MyProject3/src/Common/Endpoints/authenticate.php",
+    "filename": "/Users/dcritchlow/Dev/Project3/src/Common/Endpoints/authenticate.php",
     "groupTitle": "Authenticate"
   },
   {
@@ -139,7 +139,7 @@
       ]
     },
     "version": "0.1.0",
-    "filename": "C:/Dev/temp/MyProject3/src/Common/Endpoints/access.php",
+    "filename": "/Users/dcritchlow/Dev/Project3/src/Common/Endpoints/access.php",
     "groupTitle": "Authenticate"
   }
 ]
