@@ -26,9 +26,11 @@ foreach($config['app']['endpoints'] as $endpoint)
     require $endpoint;
 }
 
-foreach($config['app']['database'] as $key => $value)
+foreach($config['app']['mysql'] as $key => $value)
 {
     $app->$key = $value;
 }
+
+$app->sqliteFile = $config['app']['sqlite'];
 
 $app->run();
