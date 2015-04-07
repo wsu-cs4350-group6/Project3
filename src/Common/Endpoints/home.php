@@ -1,5 +1,5 @@
 <?php
 
-$app->get('/', function(){
-    echo 'API Documentation will be here';
+$app->get('/', function() use($app){
+    $app->redirect('/apidocs');
 });

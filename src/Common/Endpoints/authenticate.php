@@ -1,11 +1,108 @@
 <?php
 
 use API\Common\Authentication\DataBaseAuthentication;
+use API\Common\Authentication\SQLiteAccess;
 
-$app->post('/authenticate',function() use ($app){
+/**
+ * @api {post} /authenticate Authenticate User
+ * @apiHeader {String} Authorization Unique access key
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *       "Authorization": "e618d316-8249-5d7a-8eac-8942f73192d7"
+ *     }
+ * @apiName AuthenticateUser
+ * @apiGroup Authenticate
+ *
+ * @apiSuccess (200) {json} username Username of the User
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *  {
+ *      "username": "david"
+ *  }
+ *
+ * @apiError (401) NoAccessKey Access key was not included.
+ *
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 401 Unauthorized
+ *     {
+ *       "NoAccessKey": "You must have an access key"
+ *     }
+ *
+ * @apiError (401) InvalidAccessKey Access key was not valid.
+ *
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 401 Unauthorized
+ *     {
+ *       "InvalidAccessKey": "You must have a valid access key"
+ *     }
+ *
+ * @apiError (401) NoUserName Missing username in POST.
+ *
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 401 Unauthorized
+ *     {
+ *       "NoUserName": "You must have a valid username parameter"
+ *     }
+ *
+ * @apiError (401) NoPassword Missing password in POST.
+ *
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 401 Unauthorized
+ *     {
+ *       "NoPassword": "You must have a valid password parameter"
+ *     }
+ *
+ * @apiError (401) InvalidCredentials Invalid username and password combination.
+ *
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 401 Unauthorized
+ *     {
+ *       "InvalidCredentials": "Invalid username:password"
+ *     }
+ *
+ * @apiVersion 0.1.0
+ */
 
-    $authEngine = new DataBaseAuthentication('sqlite');
+$app->post('/authenticate',function() use ($app, $env){
+    $access = new SQLiteAccess();
+    $uuid = $app->request->headers['Authorization'];
 
-    $app->response->setStatus($authEngine->authenticate($app->request->post('username'),$app->request->post('password')));
+    if(!$uuid)
+    {
+        $app->response->setStatus(401);
+        $body = array('NoAccessKey' => 'You must have an access key');
+        $app->response->setBody(json_encode($body));
+        return;
+    }
+    if(!$access->checkUUID($uuid, $env))
+    {
+        $app->response->setStatus(401);
+        $body = array('InvalidAccessKey' => 'You must have a valid access key');
+        $app->response->setBody(json_encode($body));
+        return;
+    }
+    if(!$app->request->params('username'))
+    {
+        $app->response->setStatus(401);
+        $body = array('NoUserName' => 'You must have a valid username parameter');
+        $app->response->setBody(json_encode($body));
+        return;
+    }
+    if(!$app->request->params('password'))
+    {
+        $app->response->setStatus(401);
+        $body = array('NoPassword' => 'You must have a valid password parameter');
+        $app->response->setBody(json_encode($body));
+        return;
+    }
+
+    $authEngine = new DataBaseAuthentication('sqlite', $env);
+
+    $result = $authEngine->authenticate($app->request->post('username'),$app->request->post('password'));
+
+    $app->response->setStatus($result['status']);
+
+    $app->response->setBody(json_encode($result['body']));
 
 });

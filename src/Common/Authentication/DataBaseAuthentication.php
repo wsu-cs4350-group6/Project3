@@ -25,20 +25,29 @@ class DataBaseAuthentication implements IAuthentication
      *
      * @access public
      */
-    
+
+    protected $env;
+    protected $sqlite;
+    protected $mysql;
     protected $dbEngine;
     protected $dbh;
-    protected $dbHost = 'localhost';
-    protected $dbName = 'cs4350';
-    protected $dbUser = 'cs4350';
-    protected $dbPassword = 'cs4350';
+    protected $dbHost;
+    protected $dbName;
+    protected $dbUser;
+    protected $dbPassword;
     
     /*
     *   @param string database engine - MySQL or SQLite
     */
-    function __construct($engine)
+    function __construct($engine, $env)
     {
         $this->dbEngine = $engine;
+        $this->env = $env;
+        $this->sqlite = $env['config']['app']['sqlite'];
+        $this->dbHost = $env['config']['app']['mysql']['host'];
+        $this->dbName = $env['config']['app']['mysql']['name'];
+        $this->dbUser = $env['config']['app']['mysql']['user'];
+        $this->dbPassword = $env['config']['app']['mysql']['password'];
     }
     
     /*
@@ -48,7 +57,7 @@ class DataBaseAuthentication implements IAuthentication
     {
         if($this->dbEngine === 'sqlite')
         {
-            $this->dbh = new PDO('sqlite:'.__DIR__ . '/../../../data/cs4350.sqlite');
+            $this->dbh = new PDO('sqlite:' . $this->sqlite);
             return;
         }
         if($this->dbEngine === 'mysql')
@@ -86,10 +95,10 @@ class DataBaseAuthentication implements IAuthentication
     */
     public function authenticate($username, $password)
     {
-        $responseCode = 403;
+        $responseCode = 401;
+
         if($this->userExists($username))
         {
-            $responseCode = 401;
             try
             {
                 $this->connect();
@@ -102,7 +111,11 @@ class DataBaseAuthentication implements IAuthentication
                 if($row['password'] === md5($password))
                 {
                     $responseCode = 200;
+                    $body = array('username' => $username);
+                    return array('status' => $responseCode, 'body' => $body);
                 }
+
+                $body = array('InvalidCredentials' => 'Invalid username:password');
             
             }
             catch (PDOException $e)
@@ -110,6 +123,6 @@ class DataBaseAuthentication implements IAuthentication
                 echo $e->getMessage();
             }
         }
-        return $responseCode;
+        return array('status' => $responseCode, 'body' => $body);
     }
 }
