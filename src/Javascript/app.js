@@ -56,13 +56,24 @@
 							});
                     	})
                     	.fail(function(data){
-                    		
+                    		console.log(data);
+
                     		var json = $.parseJSON(data.responseText);
+
+                    		console.log(json);
                     		
                     		$.each(json, function(idx, obj) {
-								
-								$("#authorized").text(obj);
 
+                    			if(obj==="/register"){
+
+                    				window.location.href = obj;
+
+                    			} else {
+                    				
+                    				$("#authorized").text(obj);
+
+                    			}
+								
 							});
                     	});
                     });

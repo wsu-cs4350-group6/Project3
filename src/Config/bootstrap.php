@@ -30,6 +30,7 @@ foreach($config['app']['mysql'] as $key => $value)
 {
     $app->$key = $value;
 }
+$app->sqliteFile = $config['app']['sqlite'];
 
 $app->sqliteFile = $config['app']['sqlite'];
 

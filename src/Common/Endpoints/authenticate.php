@@ -21,6 +21,14 @@ use API\Common\Authentication\SQLiteAccess;
  *      "Location": "/user/{id}"
  *  }
  *
+ * @apiError (302) UserNotFound Username was not found, gives link to registration page.
+ *
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 302 Found
+ *     {
+ *       "UserNotFound": "/register"
+ *     }
+ *
  * @apiError (401) NoAccessKey Access key was not included.
  *
  * @apiErrorExample {json} Error-Response:
@@ -100,6 +108,12 @@ $app->post('/authenticate',function() use ($app, $env){
     $authEngine = new DataBaseAuthentication('sqlite', $env);
 
     $result = $authEngine->authenticate($app->request->post('username'),$app->request->post('password'));
+
+    if (isset($result['body']['UserNotFound'])){
+        $app->response->setStatus(302);
+        $app->response->setBody(json_encode($result['body'], JSON_UNESCAPED_SLASHES));
+        return;
+    }
 
     $app->response->setStatus($result['status']);
 
