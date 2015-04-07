@@ -32,7 +32,8 @@ $config = [
         'endpoints' => [
             '/'             => $endpoints . DIRECTORY_SEPARATOR . 'home.php',
             '/access'       => $endpoints . DIRECTORY_SEPARATOR . 'access.php',
-            '/authenticate' => $endpoints . DIRECTORY_SEPARATOR . 'authenticate.php'
+            '/authenticate' => $endpoints . DIRECTORY_SEPARATOR . 'authenticate.php',
+            '/register'     => $endpoints . DIRECTORY_SEPARATOR . 'register.php'
         ],
         'sqlite' => $dataDir . DIRECTORY_SEPARATOR . 'cs4350.sqlite',
         'mysql' => [
