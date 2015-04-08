@@ -6,32 +6,15 @@
 
 	$(function() {
 
-		$("div#loginForm").append(
-
-			$("<h3/>").text("Sign In"),
-			$("<form/>", {
-				//action: '#',
-				method: 'post'
-			}).append(
-				$("<input/>", {
-				type: 'text',
-				id: 'username',
-				name: 'username',
-				placeholder: 'username'
-				}), 
-				$("<input/>", {
-				type: 'password',
-				id: 'password',
-				name: 'password',
-				placeholder: 'password'
-				}),
-				$("<br/>"), $("<input/>", {
-				type: 'submit',
-				id: 'submit',
-				value: 'Submit'
-				})
-			)		
-		);
+		$("#loginForm").append('<form method="post">');
+		$("#loginForm form").append('<div id="username" class="form-group">');
+		$("#loginForm form #username").append('<label for="username">Username</label>');
+		$("#loginForm form #username").append('<input type="text" class="form-control" id="username" name="username" placeholder="username">');
+		$("#loginForm form").append('<div id="password" class="form-group">');
+		$("#loginForm form #password").append('<label for="password">Password</label>');
+		$("#loginForm form #password").append('<input type="password" class="form-control" id="password" name="password" placeholder="password">');
+		$("#loginForm form").append('<button type="submit" class="btn btn-default">Submit</button>');
+		
 
 		var form = $("#loginForm");
 			form.on({
@@ -69,7 +52,7 @@
                     				window.location.href = obj;
 
                     			} else {
-                    				
+
                     				$("#authorized").text(obj);
 
                     			}
