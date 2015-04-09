@@ -32,10 +32,10 @@ $app->get('/register',function() use($app){
     </body>
     <body>
         <div id='registration'>
-            <h2>Registration</h2>
+            <h3>Registration</h3>
             <form action='/register' method='post'>
-                <input type='text' name='username'/>
-                <input type='password' name='password'/>
+                <input type='text' name='username' placeholder='username'/>
+                <input type='password' name='password' placeholder='password'/>
                 <button type='submit'>Submit</button>
             </form>
         </div>
