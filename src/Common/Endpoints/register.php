@@ -42,6 +42,24 @@ $app->get('/register',function() use($app){
     <body>
         <title>Register</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>
+        $(function(){
+            $('button[type="submit"]').click(function(){
+                var username = $('form input[name="username"]').val()
+                var password = $('form input[name="password"]').val()
+                $.ajax({
+                    method:'POST',
+                    url:'/register',
+                    data:{'username':username,'password':password}
+                }).done(function(msg){
+                    $('#registration_response').html(msg);
+                }).fail(function(jqXHR, textStatus){
+                    $('#registration_response').html("Error: " + jqXHR.status);
+                });
+                return false;
+            });
+        });
+        </script>
         <link rel="stylesheet" href="/css/style.css" type="text/css" media="all">
     </body>
     <body>
@@ -52,6 +70,10 @@ $app->get('/register',function() use($app){
                 <input type='password' name='password' placeholder='password'/>
                 <button type='submit'>Submit</button>
             </form>
+            <div style='border-top:1px solid #ddd;height:1px;margin:5px 0;'></div>
+            <div id='registration_response'>
+                test
+            </div>
         </div>
     </body>
     </html>
