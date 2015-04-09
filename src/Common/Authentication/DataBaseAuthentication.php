@@ -29,8 +29,6 @@ class DataBaseAuthentication implements IAuthentication
 
     protected $env;
     protected $sqlite;
-    protected $mysql;
-    protected $dbEngine;
     protected $dbh;
     protected $dbHost;
     protected $dbName;
@@ -38,17 +36,12 @@ class DataBaseAuthentication implements IAuthentication
     protected $dbPassword;
     
     /*
-    *   @param string database engine - MySQL or SQLite
+    *   @param environment
     */
-    function __construct($engine, $env)
+    function __construct($env)
     {
-        $this->dbEngine = $engine;
         $this->env = $env;
         $this->sqlite = $env['config']['app']['sqlite'];
-        $this->dbHost = $env['config']['app']['mysql']['host'];
-        $this->dbName = $env['config']['app']['mysql']['name'];
-        $this->dbUser = $env['config']['app']['mysql']['user'];
-        $this->dbPassword = $env['config']['app']['mysql']['password'];
     }
     
     /*
@@ -56,17 +49,8 @@ class DataBaseAuthentication implements IAuthentication
     */
     private function connect()
     {
-        if($this->dbEngine === 'sqlite')
-        {
-            $this->dbh = new PDO('sqlite:' . $this->sqlite);
-            return;
-        }
-        if($this->dbEngine === 'mysql')
-        {
-            $this->dbh = new PDO('mysql:dbname='.$this->dbName.';host='.$this->dbHost,$this->dbUser,$this->dbPassword);
-            return;
-        }
-        
+        $this->dbh = new PDO('sqlite:' . $this->sqlite);
+        return;
     }
     /*
     *   @param string $username
