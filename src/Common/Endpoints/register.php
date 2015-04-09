@@ -1,7 +1,21 @@
 <?php
 
 use API\Model\User;
-
+/**
+ * @api {post} /register Register New User
+ * @apiName Register
+ * @apiGroup Authenticate
+ *
+ * @apiSuccess {String} location url of new user
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *        "location": "/user/1"
+ *     }
+ *
+ * @apiVersion 0.1.0
+ */
 $app->post('/register',function() use($app){
     $username = $app->request->post('username');
     $password = $app->request->post('password');
