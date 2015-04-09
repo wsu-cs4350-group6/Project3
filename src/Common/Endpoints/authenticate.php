@@ -105,7 +105,7 @@ $app->post('/authenticate',function() use ($app, $env){
         return;
     }
 
-    $authEngine = new DataBaseAuthentication('sqlite', $env);
+    $authEngine = new DataBaseAuthentication($env);
 
     $result = $authEngine->authenticate($app->request->post('username'),$app->request->post('password'));
 
