@@ -154,5 +154,35 @@ define({ "api": [
     "version": "0.1.0",
     "filename": "src/Common/Endpoints/access.php",
     "groupTitle": "Authenticate"
+  },
+  {
+    "type": "post",
+    "url": "/register",
+    "title": "Register New User",
+    "name": "Register",
+    "group": "Authenticate",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "location",
+            "description": "<p>url of new user</p> "
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n   \"location\": \"/user/1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.1.0",
+    "filename": "src/Common/Endpoints/register.php",
+    "groupTitle": "Authenticate"
   }
 ] });
